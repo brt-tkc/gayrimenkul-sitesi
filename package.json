@@ -1,0 +1,27 @@
+const express = require('express');
+const bodyParser = require('body-parser');
+const cors = require('cors');
+
+const app = express();
+const port = 3000;
+let emlakIlanlari = [
+  { id: 1, tur: 'ev', baslik: 'Şehir Merkezinde Müstakil Ev', aciklama: 'Geniş bahçe ve otoparklı', fiyat: '350.000 TL', resim: 'ev1.jpg' },
+  { id: 2, tur: 'daire', baslik: 'Merkezi Lokasyonda 2+1 Daire', aciklama: 'Yüksek kat, manzaralı', fiyat: '250.000 TL', resim: 'daire1.jpg' },
+  { id: 3, tur: 'villa', baslik: 'Göl Kenarında Lüks Villa', aciklama: 'Havuzlu ve geniş teraslı', fiyat: '1.200.000 TL', resim: 'villa1.jpg' },
+  { id: 4, tur: 'daire', baslik: 'Modern Tasarımlı Stüdyo Daire', aciklama: 'Yeni binada, ankastre mutfak', fiyat: '150.000 TL', resim: 'daire2.jpg' },
+  { id: 5, tur: 'villa', baslik: 'Doğa İçinde Deniz Manzaralı Villa', aciklama: 'Açık hava alanları ve spor salonu', fiyat: '900.000 TL', resim: 'villa2.jpg' },
+];
+
+app.use(cors());
+app.use(bodyParser.json());
+app.get('/api/emlak', (req, res) => {
+  res.json(emlakIlanlari);
+});
+app.post('/api/emlak', (req, res) => {
+  const yeniIlan = req.body;
+  emlakIlanlari.push(yeniIlan);
+  res.status(201).send('Emlak ilanı başarıyla eklendi.');
+});
+app.listen(port, () => {
+  console.log(`Server is running on http://localhost:${port}`);
+});
